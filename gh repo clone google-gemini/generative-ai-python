@@ -1,0 +1,174 @@
+Project name
+Pimp-city-clothing-llc-410901
+Project ID 
+fair-jigsaw-428604-p2
+Project number 
+112750161218
+Web API Key 
+AIzaSyDbEhESDUIqVz7FqdL9sKZFug0xicfUCSc
+Environment
+This setting customizes your project for different stages of the app lifecycle
+Environment type
+Unspecified
+http://localhost:9005/?state=1035598686&code=4/0ATx3LY5Se6RLX28D-JtvlpeWtBrpd4iEBogmm3PIO5g8Z9R4gOYpQ5Et4JohUiSns6BSqA&scope=email%20https://www.googleapis.com/auth/userinfo.email%20openid%20https://www.googleapis.com/auth/cloudplatformprojects.readonly%20https://www.googleapis.com/auth/firebase%20https://www.googleapis.com/auth/cloud-platform&authuser=0&prompt=consent"ghcr.io/bartventer/arch-devcontainer-features/gcloud-cli:1": {}src/gcloud-cli/devcontainer-feature.json"features": {
+    "ghcr.io/devcontainers/features/python:1": {}
+} pip install google-generativeaiimport { geminiPro } from '@genkit-ai/vertexai';
+import { ollama } from 'genkitx-ollama';
+import { generate } from '@genkit-ai/ai';
+
+function flipACoin(a, b) {
+  return Math.random() > 0.5 ? a : b;
+}
+
+const result = await generate({
+  model: flipACoin(geminiPro, 'ollama/gemma'),
+  config: { temperature: 0.3, maxOutputTokens: 200 },
+  prompt: 'What makes you the best LLM out there?',
+});
+
+console.log(result.text());import { imagen2, geminiProVision } from '@genkit-ai/vertexai';
+import { generate } from '@genkit-ai/ai';
+
+const imageResult = await generate({
+  model: imagen2,
+  prompt: 'Generate an image of a very specific historical time and place.',
+});
+const generatedImage = imageResult.media();
+
+const descriptionResult = await generate({
+  model: geminiProVision,
+  prompt: [
+    {
+      text: 'What is the historical time and place represented in this picture?',
+    },
+    { media: generatedImage },
+  ],
+});
+console.log(descriptionResult.text());---
+model: vertexai/gemini-1.0-pro
+config:
+  temperature: 0.9
+input:
+  schema:
+    properties:
+      location: {type: string}
+      style: {type: string}
+      name: {type: string}
+    required: [location]
+  default:
+    location: a restaurant
+---
+
+You are the world's most welcoming AI assistant and are currently working at {{location}}.
+
+Greet a guest{{#if name}} named {{name}}{{/if}}{{#if style}} in the style of {{style}}{{/if}}.npm i --save @genkit-ai/googleaiimport { googleAI } from '@genkit-ai/googleai';
+
+export default configureGenkit({
+  plugins: [googleAI()],
+  // ...
+});path/to/your/keyfile.json: {
+  "project_info": {
+    "project_number": "772129132688",
+    "firebase_url": "https://pimp-city-clothing-llc-default-rtdb.firebaseio.com",
+    "project_id": "pimp-city-clothing-llc",
+    "storage_bucket": "pimp-city-clothing-llc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772129132688:android:4eab79fa867d0caab98815",
+        "android_client_info": {
+          "package_name": "PimpcityClothing.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772129132688-qlk4dhq043uhj6dpa4e4p5t7off45n7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxaDhSc2JTnv7c92ujl0avgErS6C9UyHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772129132688-qlk4dhq043uhj6dpa4e4p5t7off45n7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
+configureGenkit({
+  plugins: [googleAI({ apiVersion: 'v1beta' })],
+});configureGenkit({
+  plugins: [googleAI({ apiVersion: ['v1', 'v1beta'] })],
+});import {
+  geminiPro,
+  geminiProVision,
+  textEmbeddingGecko001,
+} from '@genkit-ai/googleai';const llmResponse = await generate({
+  model: geminiPro,
+  prompt: 'Tell me a joke.',
+});const embedding = await embed({
+  embedder: textEmbeddingGecko001,
+  content: input,
+});{
+  "rules": {
+    "rooms": {
+      // this rule applies to any child of /rooms/, the key for each room id
+      // is stored inside $room_id variable for reference
+      "$room_id": {
+        "topic": {
+          // the room's topic can be changed if the room id has "public" in it
+          ".write": "$room_id.contains('public')"
+        }
+      }
+    }
+  }
+}{
+  "authEmulator": {
+    "success": "The email has been successfully verified.",
+    "email": "customer@example.com"
+  }
+}i  To verify the email address customer@ex.com, follow this link:
+http://127.0.0.1:9099/emulator/action?mode=verifyEmail&lang=en&oobCode=XYZ123&apiKey=fake-api-keyimport { dotprompt, prompt } from '@genkit-ai/dotprompt';
+
+configureGenkit({ plugins: [dotprompt()] });const greetingPrompt = await prompt('greeting');
+
+const result = await greetingPrompt.generate({
+  input: {
+    location: 'the beach',
+    style: 'a fancy pirate',
+  },
+});
+
+console.log(result.text());import { defineSchema } from '@genkit-ai/core';
+import { z } from 'zod';
+
+const MySchema = defineSchema(
+  'MySchema',
+  z.object({
+    field1: z.string(),
+    field2: z.number(),
+  })
+);# myPrompt.prompt
+---
+model: vertexai/gemini-1.5-flash
+output:
+  schema: MySchema
+---import { prompt } from "@genkit-ai/dotprompt";
+
+const myPrompt = await prompt("myPrompt");
+
+const result = await myPrompt.generate<typeof MySchema>({...});
+
+// now strongly typed as MySchema
+result.output();
